@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="./lib/underscore.js"></script>
+    <script type="text/javascript" src="./lib/backbone-en-us.js"></script>
+
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<table id="js-id-gists" class="table">
+    <thead><th>description</th><th>URL</th><th>created_at</th></thead>
+    <tbody></tbody>
+</table>
+<script type="text/javascript">
+    var Gist = Backbone.Model.extend(),
+        Gists = Backbone.Model.extend({
+            url: 'https://api.github.com/gists/public',
+            parse: function (response) {
+                return response;
+            }
+        }),
+        gists = new Gists();
+
+    var GistRow = Backbone.View.extend({
+        tagName: 'tr',
+        render: function (object) {
+            var model = new Gist(object);
+            this.el.innerHTML = '<td>' + model.get('description') + '</td><td>'+ model.get('url') + '</td><td>' + model.get('created_at') + '</td><td></td>'
+            return this;
+        }
+    });
+
+    var GistsView = Backbone.View.extend({
+        el: 'tbody',
+        model: gists,
+        initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
+        },
+        render: function () {
+            var html = '';
+            _.forEach(this.model.attributes, function (object) {
+                var tr = new GistRow();
+                html += tr.render(object).el.outerHTML;
+            });
+            this.el.innerHTML = html;
+            return this;
+        }
+    });
+    var gistsView = new GistsView();
+    gists.fetch();
+</script>
+
+
+
+
+
+<script>
+    var AppRouter = Backbone.Router.extend({
+        routes: {
+            "*actions": "defaultRoute" // 匹配 http://example.com/#anything-here
+    } }); // 实例化 Router
+    var app_router = new AppRouter;
+    app_router.on('route:defaultRoute', function(actions) {
+        // alert(actions);
+    }) // 打开 Backbone 的历史记录
+    Backbone.history.start();
+</script>
+</body>
+</html>
