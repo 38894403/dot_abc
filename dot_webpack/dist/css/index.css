@@ -1,10 +1,18 @@
-body{
-	background-color:#ccc;
-	color:white;
-	/*font:30px;*/
+/*! create by 37928 */
+body {
+  background-color: #ccc;
+  color: white;
+  /*font:30px;*/
 }
-#img{
-	height:180px;
-	width:258px;
-	background-image:url(http://192.168.1.75:1717/images/57f0b569748985f022b27ba20703b3d7.png);
+
+#img {
+  height: 180px;
+  width: 258px;
+  background-image: url(http://192.168.1.75:1717/images/57f0b569748985f022b27ba20703b3d7.png);
+}
+
+#gogo {
+  background: pink;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
